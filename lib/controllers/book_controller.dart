@@ -21,7 +21,8 @@ class BookingController extends GetxController {
 
   void updateBookingList() {
     final hallController = Get.find<HallController>();
-    bookedHalls.assignAll(hallController.halls.where((h) => h.isBooked).toList());
+    bookedHalls
+        .assignAll(hallController.halls.where((h) => h.isBooked).toList());
     calculateTotal();
   }
 
@@ -47,5 +48,15 @@ class BookingController extends GetxController {
       discount.value = 0.0;
     }
     calculateTotal();
+  }
+
+  void editBooking(int index, String newName, double newPrice) {
+    bookedHalls[index].name = newName;
+    bookedHalls[index].price = newPrice;
+
+    bookedHalls.refresh();
+    calculateTotal();
+    update();
+    Get.back();
   }
 }

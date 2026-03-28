@@ -6,12 +6,17 @@ import 'package:doaa_eida_final_exam/views/BookingScreen.dart';
 import 'package:doaa_eida_final_exam/views/HomeScreen.dart';
 import 'package:doaa_eida_final_exam/views/LoginScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/bindings_interface.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
+import 'controllers/book_controller.dart';
 import 'controllers/home_binding.dart';
+import 'controllers/login_controller.dart';
 import 'helper/MyShared.dart';
 
 void main() async {
@@ -43,16 +48,24 @@ class MyApp extends StatelessWidget {
       locale: Locale(MyShared.getLocal()),
       initialRoute: "/LoginScreen",
       getPages: [
-        GetPage(name: "/LoginScreen", page: () => LoginScreen()),
+        GetPage(
+          name: "/LoginScreen",
+          page: () => LoginScreen(),
+          binding: BindingsBuilder(() {
+            Get.lazyPut<LoginController>(() => LoginController());
+          }),
+        ),
         GetPage(
           name: "/HomeScreen",
           page: () => HomeScreen(),
           binding: HomeBinding(),
         ),
         GetPage(
-          name: "/BookingScreen",
+          name: '/BookingScreen',
           page: () => BookingScreen(),
-          binding: HomeBinding(),
+          binding: BindingsBuilder(() {
+            Get.lazyPut<BookingController>(() => BookingController());
+          }),
         ),
       ],
     );

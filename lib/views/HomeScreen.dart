@@ -100,7 +100,7 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // جعل النصوص تبدأ من اليسار
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(hall.name,
                                 style: const TextStyle(
@@ -118,7 +118,6 @@ class HomeScreen extends StatelessWidget {
                                 const Text("25.12.2025 , 08:30 AM",
                                     style: TextStyle(
                                         color: Colors.orange, fontSize: 10)),
-                                // زر الحجز (المطلب 6)
                                 SizedBox(
                                   height: 30,
                                   child: ElevatedButton(
