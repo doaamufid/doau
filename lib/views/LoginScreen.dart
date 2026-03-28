@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/login_controller.dart';
+import '../translations/stringsKey.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginController());
 
     return Scaffold(
       backgroundColor: const Color(0xFFEDBE53),
@@ -48,9 +48,11 @@ class LoginScreen extends StatelessWidget {
 
                     TextField(
                       controller: controller.userNameController,
+                      style: const TextStyle(color: Colors.black),
                       decoration: InputDecoration(
                         suffixIcon: const Icon(Icons.person_outline),
                         hintText: "User Name",
+                        hintStyle: TextStyle(color: Colors.grey.shade400),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
                       ),
                     ),
@@ -59,9 +61,11 @@ class LoginScreen extends StatelessWidget {
                     TextField(
                       controller: controller.passwordController,
                       obscureText: true,
+                      style: const TextStyle(color: Colors.black),
                       decoration: InputDecoration(
                         suffixIcon: const Icon(Icons.visibility_off_outlined),
                         hintText: "********",
+                        hintStyle: TextStyle(color: Colors.grey.shade400),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
                       ),
                     ),
@@ -115,24 +119,24 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-
-
                       ],
                     ),
 
                     const SizedBox(height: 40),
 
-                     Center(
-                       child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Icon(Icons.arrow_forward, color: Colors.black, size: 18),
-                              Text("Get Start Now", style: TextStyle(color: Colors.black, fontSize: 15)),
-                            ],
-                          ),
-                     ),
-
-
+                    Center(
+                      child: GestureDetector(
+                        onTap: () => Get.toNamed("/HomeScreen", arguments: {"isGuest": true}),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: const [
+                            Icon(Icons.arrow_forward, color: Colors.black, size: 18),
+                            SizedBox(width: 5),
+                            Text("Get Start Now", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500)),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
