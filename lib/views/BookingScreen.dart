@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/book_controller.dart';
+import '../helper/MyShared.dart';
+import '../translations/stringsKey.dart';
 
 class BookingScreen extends GetView<BookingController> {
   @override
@@ -9,9 +11,10 @@ class BookingScreen extends GetView<BookingController> {
     const Color iconBgColor = Color(0xFFF6F7FB);
 
     return Scaffold(
-      backgroundColor: Color(0xFFF6F7FB),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text("Booking"),
+
+        title:  Text(Strings.booking.tr),
         backgroundColor: primaryColor,
         actions: [
           IconButton(icon: const Icon(Icons.settings), onPressed: () => _showSettingsPopup(context))
@@ -142,28 +145,44 @@ class BookingScreen extends GetView<BookingController> {
     Get.bottomSheet(
       Container(
         padding: const EdgeInsets.all(20),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        decoration: BoxDecoration(
+          // يتغير لون الحاوية نفسها حسب الثيم
+          color: Get.isDarkMode ? Colors.grey[900] : Colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text("Settings", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(Strings.settings.tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const Divider(),
+
+            // مطلب تغيير الثيم (Switching Theme) [صفحة 5/4 في الورقة]
+            ListTile(
+              leading: const Icon(Icons.palette),
+              title: Text(Strings.changeTheme.tr),
+              trailing: Switch(
+                value: Get.isDarkMode, // القيمة الحالية
+                onChanged: (value) {
+                  // 1. تغيير الثيم مباشرة (Apply change directly)
+                  Get.changeTheme(value ? ThemeData.dark() : ThemeData.light());
+
+                  // 2. حفظ الثيم ليعمل عند إعادة التشغيل (Persistence)
+                  MyShared.setThemeMode(value);
+
+                  // إغلاق القائمة المنبثقة
+                  Get.back();
+                },
+              ),
+            ),
+
+            // مطلب تغيير اللغة (Localization)
             ListTile(
               leading: const Icon(Icons.language),
-              title: const Text("Change Language"),
+              title: Text(Strings.changeLang.tr),
               onTap: () {
-                Get.updateLocale(Get.locale?.languageCode == 'ar' ? const Locale('en') : const Locale('ar'));
-                Get.back();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.dark_mode),
-              title: const Text("Dark / Light Mode"),
-              onTap: () {
-                Get.changeTheme(Get.isDarkMode ? ThemeData.light() : ThemeData.dark());
+                Locale locale = Get.locale?.languageCode == 'ar' ? const Locale('en') : const Locale('ar');
+                Get.updateLocale(locale);
+                MyShared.setLocal(locale.languageCode); // حفظ اللغة أيضاً
                 Get.back();
               },
             ),

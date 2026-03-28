@@ -30,7 +30,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: MyTheme.getThemeData(isLight: MyShared.getThemeMode()),
+      theme: ThemeData.light().copyWith(
+        scaffoldBackgroundColor: const Color(0xFFF6F7FB),
+        appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF413DA2)),
+      ),
+      darkTheme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Colors.black,
+        appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF1A1A1A)),
+      ),
+      themeMode: MyShared.getThemeMode() ? ThemeMode.dark : ThemeMode.light,
       translations: LocalizationService.getInstance(),
       locale: Locale(MyShared.getLocal()),
       initialRoute: "/LoginScreen",
