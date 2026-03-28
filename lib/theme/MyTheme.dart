@@ -18,7 +18,6 @@ class MyTheme {
               textStyle: MaterialStateProperty.all<TextStyle>(
                   TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               maximumSize: MaterialStateProperty.all<Size>(
-                //القيمة الاولى width والتانية height
                   Size(300, 300)),
               padding: MaterialStateProperty.all<EdgeInsets>(
                   EdgeInsets.symmetric(vertical: 10, horizontal: 20)))),

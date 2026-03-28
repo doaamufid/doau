@@ -8,6 +8,8 @@ part 'user_model.g.dart';
    String? email;
   @HiveField(1)
   String? name;
+  @HiveField(2)
+  String? password;
 
-  UserModel({this.email, this.name});
+  UserModel({this.email,this.password, this.name});
 }
